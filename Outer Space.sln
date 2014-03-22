@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "client-pygame", "client-pygame\client-pygame.pyproj", "{88DD7257-6B56-417A-8587-61DC067EAE82}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "server", "server\server.pyproj", "{19E5B2F6-669D-43B0-A37B-4632647BE161}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{88DD7257-6B56-417A-8587-61DC067EAE82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{88DD7257-6B56-417A-8587-61DC067EAE82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19E5B2F6-669D-43B0-A37B-4632647BE161}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19E5B2F6-669D-43B0-A37B-4632647BE161}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
