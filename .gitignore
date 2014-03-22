@@ -6,6 +6,7 @@
 *.user
 *.sln.docstates
 *.pyc
+/client-pygame/var/osci.ini
 
 # Build results
 
