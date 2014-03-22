@@ -8,7 +8,7 @@ def N_(text):
 sys.modules["__builtin__"].N_ = N_
 
 #rulesets - add each res/rules/"ruleset" name here
-rulesets = ('standard','alter')
+rulesets = ('standard',) #'alter')
 
 # constants
 #foreground = 0x30, 0xe0, 0x30, 0x00
