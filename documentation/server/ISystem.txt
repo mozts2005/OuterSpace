@@ -1,0 +1,35 @@
+Available public methods:
+
+(Notes for calling command info)
+s.*(...) refers to:
+- osclient.py: >>> s.*(...)
+- client: client.cmdProxy.*(...)
+
+Everyone:
+~~~~~~~~~
+rename: rename system (checks to make sure you are owner of all owned planets in system). Use: s.rename(systemID, new_name, planet_counter_type) where planet_counter_type is 1, 2, 3, 4, or 5; returns new names of each planet
+
+Owner and Full Level:
+~~~~~~~~~~~~~~~~~~~~~
+(none - system is never "owned")
+
+Admin Level:
+~~~~~~~~~~~~
+getObjectsInSpace: determine fleets orbiting a planet. Use: s.getObjectsInSpace(systemID); returns near fleets
+
+addMine: adds a mine to the system. Use: s.addMine(systemID, mineOwnerID, mineTechID, maxNumOfMines)
+
+getMines: returns the system mine info. Use: s.getMines(systemID, mineOwnerID); returns minefield
+
+fireMine: shoots a random mine and removes it from existing mines. Use: s.fireMine(systemID, mineOwnerID); returns tuple of damage, att, and ignore_shield
+
+processPRODPhase: processes the production phase. Use: s.processPRODPhase(systemID, None)
+
+processACTIONPhase: processes the action phase. Use: s.processACTIONPhase(systemID, None)
+
+processBATTLEPhase: processes the battle phase. Use: s.processBATTLEPhase(systemID, None)
+
+processINITPhase: processes the initial phase. Use: s.processINITPhase(systemID, None)
+
+processFINALPhase: processes the final phase. Use: s.processFINALPhase(systemID, None)
+

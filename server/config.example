@@ -1,0 +1,61 @@
+[server]
+; hostname where to listen for commands (specifies interface to use)
+host=localhost
+; port where listen for commands
+port=9080
+; operational mode
+; normal - for productions server
+; devel - for development
+mode=normal
+; name of the universe
+name=TESTING
+; ruleset name
+; see res/rules directory
+rules=standard
+
+; Information for metaserver
+
+; minimal rank for players
+rank=10
+; descriptive info
+info=This is testing server of the Outer Space multiplayer game
+; realm - specifies group of servers that trust each other
+; and respect player rank in this realm
+; Note: use NONE if you have no realm
+realm=NONE
+
+; metaserver is disabled by default
+; uncomment commented lines and fill in correct info
+[metaserver]
+; metaserver url
+;url=http://localhost:9000/xmlrpc
+; login/password
+;login=test
+;password=test
+
+; when perform sessions cleanup
+[scheduler:cleanup]
+minute=5,10,15,20,25,30,35,40,45,50,55
+enabled=yes
+
+; when to perfom database backup
+[scheduler:backup]
+minute=30
+hour=0,12
+enabled=yes
+
+; when to run turns
+[scheduler:turn:0]
+minute=0
+weekday=0,1,2,3,4
+enabled=yes
+
+[scheduler:turn:1]
+minute=0
+hour=0,2,4,6,8,10,12,14,16,18,20,22
+weekday=5,6
+enabled=yes
+
+; when to send metaserver keepalive meessages
+[scheduler:metaserver]
+enabled=yes

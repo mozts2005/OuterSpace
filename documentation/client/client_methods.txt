@@ -1,0 +1,75 @@
+Methods used in: client-pygame/lib/osci/client.py
+
+I am going over the normally used commands first, then the lesser used commands. A few I have skipped 
+becuase they aren't used except internally to the core server. --RC
+
+
+Main Commands:
+~~~~~~~~~~~~~~
+
+keepAlive: calls "getMessages" command. Can be forced (pass True).
+
+
+get: The most common method used to retrieve object information:
+- objID: id of the object to 'get'
+- forceUpdate: set to 1 to force the command to query the server rather than first checking the local DB
+- noUpdate: set to 1 to force the command to just return the DB entry if it exists, or None
+- canBePublic: set to 0 to force the command to only query owner data rather than public data
+- publicOnly: set to 1 to force the command to only query the public data rather than owner data
+
+* If you use noUpdate, then using the other three are meaningless.
+* If you don't use forceUpdate, then it tries to grab the data locally first.
+* Public data is defined as any data that is publically available (that is, based on your scanner view)
+* Owner data is any data where you, the player, owns it (or you are logged in as an admin)
+
+* If publicOnly is not set and you call client.get without being the owner, it will first query the owner 
+method, then the public method, doubling the time to query the data. Therefore, if you know you are never 
+the play, MAKE SURE you specify publicOnly=1
+
+* Getting owner data calls: cmdProxy.getInfo(...)
+* Getting public data calls: cmdProxy.getPublicInfo(...)
+
+
+updateIDs: deletes all objecs and requeries
+
+getRelationTo: queries the passed object ID (objID) for diplomatic relations of the current player; returns the relationship (see Const.py on server)
+
+getTurn: returns current turn
+
+getFullTechInfo: returns the tech from the Rules.techs list (the parsed XML files)
+
+getTechInfo: returns the tech based on what current player knows of the tech based on that account's tech research
+
+getAllTechIDs: returns the IDs of all techs from Rules.techs's keys
+
+getPlayerID: returns the current player's ID
+
+getDiplomacyWith: returns current pacts of the passed object ID (contactID), or returns default pacts if unknown
+
+getMessages: loads new forum messages
+
+getMessagesLastID: internally used in getMessages
+
+
+-----------
+
+Other Commands:
+~~~~~~~~~~~~~~~
+
+Account Management:
+login: log into game (gameid) with username (login) and password (password)
+createAccount: create a new account with username (login), password (password), player name (nick), and email (email)
+logout: log out of a game and save database
+saveDB: save database
+
+Message Handling:
+msgHandler: process server messages; message id (mid), data (data)
+messageIgnore: adds a message id (mid) to ignored messages
+messageEnable: removes a message id (mid) from ignored messages
+
+Updater:
+updateDatabase: tries to update the datbabse by updateDatabaseUnsafe method, otherwise returns an error
+updateDatabaseUnsafe: retrieves info for every object the player can see or owns (this is what happens at the start of every turn)
+
+
+

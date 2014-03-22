@@ -1,0 +1,41 @@
+Available public methods:
+
+(Notes for calling command info)
+s.*(...) refers to:
+- osclient.py: >>> s.*(...)
+- client: client.cmdProxy.*(...)
+
+Everyone:
+~~~~~~~~~
+getPublicInfo: returns standard info - oid, type, name, emrLevel. Use: s.getPublicInfo(galaxyid)
+
+
+Owner and Full Level:
+~~~~~~~~~~~~~~~~~~~~~
+(none - galaxy is never "owned")
+
+
+Admin Level:
+~~~~~~~~~~~~
+loadFromXML: load a galaxy from an XML file. Use: s.loadFromXML(galaxyid, file_handle_of_XML, galaxyid, x, y, name)
+
+enableTime: start galaxy time. Use: s.enableTime(galaxyid, force, deleteSP, enable) where deleteSP is 'delete remaining starting positions'
+
+delete: delete galaxy. Use: s.delete(galaxyid); returns 1
+
+setupEnvironment: set up initial environment (mutants, renegades, pirates, and eden). Use: s.setupEnvironment(galaxyid)
+
+processINITPhase: processes the initial phase. Use: s.processINITPhase(galaxyid, None)
+
+processPRODPhase: processes the production phase. Use: s.processPRODPhase(galaxyid, None)
+
+processACTIONPhase: processes the action phase. Use: s.processACTIONPhase(galaxyid, None)
+
+processSCAN2Phase: processes the scan phase. Use: s.processSCAN2Phase(galaxyid, None)
+
+processBATTLEPhase: processes the battle phase. Use: s.processBATTLEPhase(galaxyid, None)
+
+processFINALPhase: processes the final phase. Use: s.processFINALPhase(galaxyid, None)
+
+processFINAL2Phase: saves galaxy history. Use: s.processFINALPhase(galaxyid, None)
+

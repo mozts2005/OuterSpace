@@ -1,0 +1,67 @@
+Available public methods:
+
+(Notes for calling command info)
+s.*(...) refers to:
+- osclient.py: >>> s.*(...)
+- client: client.cmdProxy.*(...)
+
+Everyone:
+~~~~~~~~~
+getPublicInfo: returns public info (name, obj type). Use: s.getPublicInfo(playerID); also called from client by client.get(playerID)
+
+
+Owner and Full Level:
+~~~~~~~~~~~~~~~~~~~~~
+resign: causes player to resign. Use: s.resign(playerID)
+
+addShipDesign: adds a ship design. Use: s.addShipDesign(playerID, name, hullTechID, equipmentTechIDs[array])
+
+addBuoy: adds a buoy to a star. Use: s.addBuoy(playerID, systemID, text, buoyType) where buoyType is BUOY_NONE, BUOY_PRIVATE, BUOY_TO_ALLY, BUOY_TO_SCANNERSHARE; return buoys
+
+scrapShipDesign: deletes a ship design. Use: s.scrapShipDesign(playerID, designID); return shipDesigns, fleets, stratRes
+
+getShipDesign: gets a ship design. Use: s.getShipDesign(playerID, designID); return shipDesign
+
+upgradeShipDesign: sets a ship design to upgrade to a new design. Use: s.upgradeShipDesign(playerID, oldDesignID, newDesignID); return shipDesigns, stratRes, tasksUpgraded (boolean)
+
+cancelUpgradeShipDesign: cancels an existing upgrade command. Use: s.cancelUpgradeShipDesign(playerID, designID); return shipDesigns
+
+startResearch: begins a research item. Use: s.startResearch(playerID, techID, improveToMax); return research queue
+
+abortResearch: cancels a research item. Use: s.abortResearch(playerID, index_of_research_task_in_list); return research queue
+
+editResearch: modifies a research item's improveToMax flag. Use: s.editResearch(playerID, index_of_research_task_in_list, improveToMax); return research queue
+
+moveResearch: modifies a research item's position. Use: s.moveResearch(playerID, index_of_research_task_in_list, position_offset_from_original_index); return research queue
+
+redirectShips: sets a ship redirect command. Use: s.redirectShips(playerID, sourceSystemID, targetSystemID); return ship redirections
+
+changePactCond: changes a diplomacy pact condition. Use: s.changePactCond(playerID, targetPlayerID, pactID, state, conditions); return diplomacy relations
+
+getPartyDiplomacyRels: returns your pacts with a player and their pacts with you. Use: s.getPartyDiplomacyRels(playerID, targetPlayerID); return your diplomacy relations, contact's diplomacy relations
+
+getRelationTo: returns your relations with a player. Use: s.getRelationTo(playerID, targetPlayerID); returns relation level
+
+setVoteFor: sets your vote to a player. Use: s.setVoteFor(playerID, targetPlayerID); returns playerID that you are voting for
+
+getScannerMap: gets your scanner map. Use: s.getScannerMap(playerID); returns map (list of all objects visible)
+
+cleanUpMsgs: deletes all messages in Events forum. Use: s.cleanUpMsgs(playerID)
+
+
+Admin Level:
+~~~~~~~~~~~~
+delete: deletes player. Use: s.delete(playerID)
+
+giveUp: causes player to resign. Use: s.giveUp(playerID,playerID)
+
+processDIPLPhase: processes the diplomacy phase. Use: s.processDIPLPhase(playerid, None)
+
+processRSRCHPhase: processes the research phase. Use: s.processRSRCHPhase(playerid, None)
+
+processACTIONPhase: processes the action phase. Use: s.processACTIONPhase(playerid, None)
+
+processINITPhase: processes the initial phase. Use: s.processINITPhase(playerid, None)
+
+processFINALPhase: processes the final phase. Use: s.processFINALPhase(playerid, None)
+

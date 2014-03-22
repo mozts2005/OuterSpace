@@ -1,0 +1,32 @@
+Game Interface Setup
+(base directory: client-pygame)
+
+Game loader:
+osc.py loads lib/osci/main.py
+
+Game manager:
+main.py:
+- imports pygame components
+- loads var/config.ini, or sets up var/config.ini if it doesn't exist
+- initializes pygame app
+- imports lib/osci/res which loads ./res directory
+- event loop started (see Event Loop below); event loop must be stopped before continuing)
+- configuration saved (player colors, highlight events, etc)
+- client is logged out and shut down
+
+Event loop
+main.py - search for "#event loop"
+- checks for autologin; if so, logs in
+- collects events
+- scans events:
+  - type = quit; quits
+  - key = F12; quits
+  - key = F9; sets "force keep alive" command
+- sends events to pygame app function "processEvent", which in turn calls each registered widget's function "processEvent"
+- updates screen draw if needed
+- sends "keep alive" command with "force keep alive" variable. This calls client.keepAlive function, which requests messages from server
+- db save check is done; if it has been 4 hours since last save, db is saved
+- any exceptions that occured are processed and displayed
+
+
+

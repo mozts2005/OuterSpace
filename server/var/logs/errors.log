@@ -1,0 +1,7 @@
+2014-03-16 01:12:23 WAR -- Cannot complete RPC call
+-------------------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\ospace\server\lib\ige\RPCServer.py", line 58, in call
+    packet.result, packet.messages = apply(callMap[intern(packet.method)], params)
+KeyError: 'Alpha.execute'
+-------------------------------------------------------------------------------

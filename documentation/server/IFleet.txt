@@ -1,0 +1,45 @@
+Available public methods:
+
+(Notes for calling command info)
+s.*(...) refers to:
+- osclient.py: >>> s.*(...)
+- client: client.cmdProxy.*(...)
+
+Everyone:
+~~~~~~~~~
+(none)
+
+
+Owner and Full Level:
+~~~~~~~~~~~~~~~~~~~~~
+removeShips: remove ships from a fleet. Use: s.removeShips(fleetID, ships[array of ships])
+
+disbandFleet: disband a fleet and scrap all ships. Use: s.disbandFleet(fleetID)
+
+joinFleet: joins two fleets together: first fleet joins second fleet. Use: s.joinFleet(fleetID, join_to_fleetID -or- OID_NONE, force) where if OID_NONE, fleet is selected by first available fleet in system
+
+splitFleet: splits a fleet into two fleets. Use: s.splitFleet(fleetID, ships[array of ships], fuel); returns new fleets and owner's fleet list
+
+renameFleet: adds a custom name to a fleet. Use: s.renameFleet(fleetid, name); returns name
+
+removeFleetName: removes a custom name from a fleet. Use: s.removeFleetName(fleetID); returns name
+
+setMergeState: sets the "join fleet" state parameter (0 [no joins], 1 [normal joins], or 2 [retain name]). Use: s.setMergeState(fleetID, state); returns state
+
+addAction: adds a fleet action. Use: s.addAction(fleetID, index_of_insert_point_of_new_action, action (see FLACTION constants), targetID (target system or planet), data)
+
+deleteAction: removes a fleet action. Use: s.deleteAction(fleetID, index_of_action)
+
+setActionIndex: sets current active action. Use: s.setActionIndex(fleetID, index_of_action)
+
+moveAction: change action order. Use: s.moveAction(fleetID, index_of_action, position_relative_offset)
+
+clearProcessedActions: delete all actions prior to current action. Use: s.clearProcessedActions(fleetID)
+
+
+Admin Level:
+~~~~~~~~~~~~
+processACTIONPhase: processes the action phase. Use: s.processACTIONPhase(fleetID, None)
+
+processFINALPhase: processes the final phase. Use: s.processFINALPhase(fleetID, None)
+

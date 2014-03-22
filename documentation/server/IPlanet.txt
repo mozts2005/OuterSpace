@@ -1,0 +1,43 @@
+Available public methods:
+
+(Notes for calling command info)
+s.*(...) refers to:
+- osclient.py: >>> s.*(...)
+- client: client.cmdProxy.*(...)
+
+Everyone:
+~~~~~~~~~
+(none)
+
+
+Owner and Full Level:
+~~~~~~~~~~~~~~~~~~~~~
+startConstruction: starts building a structure. Use: s.startConstruction(planetID, structureTechID, quantity_to_build, targetPlanetID, isShip_flag, reportFinished_flag, demolishStructID); returns prodQueue, stratRes
+
+changeConstruction: changes the quantity of a structure to build. Use: s.changeConstruction(planetID, index_in_prod_queue, quantity_to_build); returns prodQueue, stratRes
+
+abortConstruction: aborts a construction task. Use: s.abortConstruction(planetID, index_in_prod_queue); returns prodQueue, stratRes
+
+moveConstrItem: repositions item in prod queue. Use: s.moveConstrItem(planetID, index_in_prod_queue, position_offset_from_original_index); returns prodQueue
+
+setMinStorage: sets min Bio and En storage. Use: s.setMinStorage(planetID, bio_quantity, en_quantity)
+
+setAutoStorage: turns on/off auto management of Bio/En storage. Use: s.setAutoMinStorage(planetID, state) where state is 0 or 1; returns state
+
+setStructOn: turns on/off structure. Use: s.setStructOn(planetID, index_of_slot, state) where state is 0 or 1; returns slot contents
+
+demolishStruct: destroys a structure. Use: s.demolisStruct(planetID, index_of_slot); returns slots
+
+
+
+Admin Level:
+~~~~~~~~~~~~
+changeOwner: set planet's owner, or change a planet's owner with "force."  Use: s.changeOwner(planetID, newOwnerID, force)
+
+processPRODPhase: processes the production phase. Use: s.processPRODPhase(planetID, None)
+
+processACTIONPhase: processes the action phase. Use: s.processACTIONPhase(planetID, None)
+
+processFINALPhase: processes the final phase. Use: s.processFINALPhase(planetID, None)
+
+

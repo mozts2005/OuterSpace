@@ -1,0 +1,80 @@
+First, retrieve the object you want: client.get(objID)
+
+See client_methods.txt section on "get" - it is important to read this.
+
+
+The data in the objects:
+~~~~~~~~~~~~~~~~~~~~~~~~
+You can query data, such as planet.slots, if you can see the planet. The level of "visibility" is 
+defined in the server object. For instance, to see what can be read for a planet, look in IPlanet.py 
+on the server (server/lib/ige/ospace). Search for the function "getScanInfos" to see what is 
+available to query directly. Each of these items, if in the proper scan level or lower, will be 
+visible to the client through the client's pseudo-IPlanet object (by pseudo, I refer to it being a 
+temporary IDataHolder class object, rather than the actual IPlanet class object).
+
+Since information may not be availale, it is highly recommended that (unless you do other checks), 
+you encapsulate every lookup in:
+- hasattr({object}, "{attribute}")
+or
+- getattr({object}, "{attribute}", {default})
+
+The is simpler and often more useful, but doesn't work if you are doing anything more than assigning 
+the value to a variable.
+
+
+Running a command on the objects:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+client.cmdProxy.{command}(objectID, additional_variables)
+
+This queries the cmdProxy tool, which essentially sends your request onto the RPC client on the server.
+The RPC server passes the command on to server/lib/ige/GameMnger.py through the method "execute." This 
+then checks if the object referenced by the objectID has a method that your player has permission to 
+access.  Once everything os OK, the object specified (via objectID) has the method run on it.
+
+----
+
+How do you know if you have permission? Here is an example:
+
+File: server/lib/ige/ospace/IPlanet.py
+Command called: client.cmdProxy.startConstruction(planetID, techID, quantity, targetID, isShip, reportFinished, demolishStruct)
+
+The command is sent to the RPC server, where it looks up the planetID. The planet object is known, and 
+it looks up the command. The command has set (see just below the method in IPlanet):
+
+	startConstruction.public = 1
+	startConstruction.accLevel = AL_FULL
+
+Public? OK 
+Access? Maybe
+
+Ok, time look at access - there are 5 levels of access:
+AL_NONE: 0
+AL_INFO: 50
+AL_FULL: 100
+AL_OWNER: 110
+AL_ADMIN: 1000
+
+The game looks up your player. If you are the owner of the object, your access is set to AL_OWNER. If you 
+are an admin, you get AL_ADMIN. Otherwise you are left at AL_NONE. It then compares the access level that
+you are to the required access level for the command.
+
+Check: owner's access level > startConstruction.accLevel
+You are the owner: OK
+You are an admin: OK
+You are neither: FAIL
+
+Now, if it is both public, and you have access, you can execute it.
+
+The command is executed as: planet.startConstruction(...)
+
+And thus ends the example.
+
+----
+
+If you need to know what commands are available, just look through the server objects. Most things are either 
+private or require an admin, such as phase processing. But many others are available to the client. In all 
+cases, the items available to the client were processed at some time in the past.
+
+Enjoy!
+
+
