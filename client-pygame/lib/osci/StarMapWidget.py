@@ -1127,6 +1127,7 @@ class StarMapWidget(Widget):
                 pygame.draw.line(surface, (0xff, 0xff, 0x00), (sx, sy), (dx, dy), 2)
             if not self.showFleetLines and activeObjID and activeObjID in self._fordersTarget:
                 # made fleet lines show for all orders not just the last one -EMS 3/22/14
+                # Fixes #1
                 for x, y, x1, y1, color, millitary, fleetID in self._map[self.MAP_FORDERS]:
                     if fleetID == activeObjID:
                         if not self.showCivilianFleets and not military:
