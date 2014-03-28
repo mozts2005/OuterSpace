@@ -39,6 +39,8 @@ class FleetScoutBloomDlg:
 		self.targetPlayerID = OID_NONE
 		self.fleet = None
 		self.sendShips = []
+		self.sendShipType = []
+		self.sendShipTypeIndex = 0
 
 	def display(self, fleetDlg):
 		self.fleetDlg = fleetDlg
@@ -50,6 +52,8 @@ class FleetScoutBloomDlg:
 		self.win.vStarMap.lockObj = fleet.orbiting
 		self.win.vStarMap.precompute()
 		self.sendShipIndex = 0
+		self.sendShipType = ["Move","Deploy"]
+		self.sendShipTypeIndex = 0
 		self.targets = []
 		if self.targetID:
 			target = client.get(self.targetID, noUpdate = 1)
@@ -85,6 +89,8 @@ class FleetScoutBloomDlg:
 			info = getattr(target, 'name', res.getUnknownName())
 		# correct buildingIndex
 		if self.sendShipIndex >= len(self.sendShips):
+			self.sendShipIndex = 0
+		if self.sendShipTypeIndex >= 2:
 			self.sendShipIndex = 0
 		# get target data
 		self.win.vTarget.text = info
@@ -122,6 +128,7 @@ class FleetScoutBloomDlg:
 			techID = self.sendShips[self.sendShipIndex]
 			self.win.vSendShip.text = client.getPlayer().shipDesigns[techID].name
 			self.win.vSendShip.data = techID
+			self.win.vSendShipType.text = self.sendShipType[self.sendShipTypeIndex]
 		else:
 			self.win.setStatus(_("No ships found."))
 
@@ -134,6 +141,9 @@ class FleetScoutBloomDlg:
 			self.targetID = target.oid
 			self.win.vStarMap.highlightPos = (target.x, target.y)
 		elif target.type in (T_SYSTEM, T_WORMHOLE):
+			if self.sendShipTypeIndex == 1:
+				self.win.setStatus(_("You must select a planet"))
+				return
 			self.targetID = target.oid
 			self.win.vStarMap.highlightPos = (target.x, target.y)
 		else:
@@ -146,7 +156,10 @@ class FleetScoutBloomDlg:
 			newfleet = self.splitShip()
 			if newfleet:
 				#move the ship
-				self.moveShip(newfleet)
+				if self.sendShipTypeIndex == 0:
+					self.moveShip(newfleet)
+				elif self.sendShipTypeIndex == 1:
+					self.deployShip(newfleet)
 				#add fleet to starmap without recomputing the whole starmap
 				client.db[newfleet.oid] = client.get(newfleet.oid, forceUpdate = 1)
 				self.win.vStarMap.precomputeFleet(newfleet)
@@ -180,6 +193,12 @@ class FleetScoutBloomDlg:
 		client.cmdProxy.addAction(fleet.oid, 0, FLACTION_MOVE, self.targetID, 0)
 
 
+	def deployShip(self,fleet):
+                designID = self.sendShips[self.sendShipIndex]
+		self.targets.append(self.targetID)
+		client.cmdProxy.addAction(fleet.oid, 0, FLACTION_DEPLOY, self.targetID, designID)
+
+
 	def onDone(self, widget, action, data):
 		gdata.mainGameDlg.update()
 		self.fleetDlg.update()
@@ -187,6 +206,10 @@ class FleetScoutBloomDlg:
 
 	def onSendShipChange(self, widget, action, data):
 		self.sendShipIndex += 1
+		self.showCommands()
+
+	def onSendShipTypeChange(self, widget, action, data):
+		self.sendShipTypeIndex += 1
 		self.showCommands()
 
 	def createUI(self):
@@ -213,6 +236,10 @@ class FleetScoutBloomDlg:
 			align = ui.ALIGN_E)
 		ui.Button(self.win, layout = (5, 25, 10, 1), id = 'vSendShip',
 			align = ui.ALIGN_NONE, action = 'onSendShipChange')
+		ui.Label(self.win, layout = (17, 25, 5, 1), text = _('Type'),
+			align = ui.ALIGN_E)
+		ui.Button(self.win, layout = (22, 25, 10, 1), id = 'vSendShipType',
+			align = ui.ALIGN_NONE, action = 'onSendShipTypeChange')
 		ui.Label(self.win, layout = (0, 26, 5, 1), text = _("For last move:"), align = ui.ALIGN_W)
 		ui.Label(self.win, layout = (5, 26, 2, 1), text = _("ETA:"), align = ui.ALIGN_W)
  		ui.Label(self.win, layout = (7, 26, 2, 1), id = 'vEta', align = ui.ALIGN_E)
