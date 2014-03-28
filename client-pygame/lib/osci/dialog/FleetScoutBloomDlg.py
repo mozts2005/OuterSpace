@@ -91,7 +91,7 @@ class FleetScoutBloomDlg:
 		if self.sendShipIndex >= len(self.sendShips):
 			self.sendShipIndex = 0
 		if self.sendShipTypeIndex >= 2:
-			self.sendShipIndex = 0
+			self.sendShipTypeIndex = 0
 		# get target data
 		self.win.vTarget.text = info
 		fleet = self.fleet
